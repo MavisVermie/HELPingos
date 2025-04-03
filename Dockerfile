@@ -1,15 +1,15 @@
-# Use the official PHP image with Apache
 FROM php:8.2-apache
 
-# Copy all your project files into the Apache web directory
-COPY . /var/www/html/
+# Install MySQLi extension
+RUN docker-php-ext-install mysqli
 
-# Set file permissions (optional but recommended)
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html
-
-# Enable Apache rewrite module (optional if you're using .htaccess)
+# Enable mod_rewrite (optional for .htaccess)
 RUN a2enmod rewrite
 
-# Expose port 80 (Render uses this internally)
+# Copy your project files
+COPY . /var/www/html/
+
+# Set file permissions (optional)
+RUN chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html
+
 EXPOSE 80
