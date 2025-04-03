@@ -1,9 +1,7 @@
 <?php
-// Start the session before ANY HTML is output
 session_start();
 include 'db.php';
 
-// Set up the database connection using mysqli
 $conn = mysqli_connect("localhost", "root", "", "helpingos");
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
