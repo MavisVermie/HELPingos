@@ -1,11 +1,7 @@
 <?php
+ob_start();
 session_start();
 include 'db.php';
-
-$conn = mysqli_connect("localhost", "root", "", "helpingos");
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-}
 ?>
 
 <!DOCTYPE html>
@@ -44,13 +40,11 @@ if (!$conn) {
 				<li><i class="cart"></i><a href="cart.php">Cart
 					<span>
 					<?php
-						$sql = "SELECT COUNT(*) FROM helpingos_cart";
-						$result = mysqli_query($conn, $sql);
-						if ($result) {
-							$row = mysqli_fetch_array($result);
-							$count = $row[0];
+						try {
+							$stmt = $pdo->query("SELECT COUNT(*) FROM helpingos_cart");
+							$count = $stmt->fetchColumn();
 							echo "<span style='color:cream'>&nbsp;&nbsp;(" . $count . ")</span>";
-						} else {
+						} catch (PDOException $e) {
 							echo "<span style='color:red'>Error</span>";
 						}
 					?>
